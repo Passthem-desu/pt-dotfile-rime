@@ -17,6 +17,8 @@
 枠       waku    0
 斩杀线   vjuaxm  0
 全所为   qrsoww  1
+霞鹜     xxwu    1
+霞鹜文楷 xxwuwfkd   1
 
 # 认识的朋友
 泡壳     pcke    3
