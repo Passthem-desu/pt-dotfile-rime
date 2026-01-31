@@ -1,0 +1,6 @@
+[submodule "submodules/rime-fast-xhup"]
+	path = submodules/rime-fast-xhup
+	url = https://github.com/boomker/rime-fast-xhup.git
+[submodule "submodules/rime-flyhe-dict"]
+	path = submodules/rime-flyhe-dict
+	url = https://github.com/boomker/Rime-flyhe-dict.git

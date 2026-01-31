@@ -1,0 +1,49 @@
+# 本文件是配置 RIME 引擎的配置
+
+patch:
+  "preset_color_schemes/akarin":
+    author: Passthem
+    back_color: 0xFFF9F5
+    border_color: 0x593E25
+    candidate_text_color: 0x593E25
+    comment_text_color: 0xBFBFBF
+    hilited_back_color: 0xE0CDC1
+    hilited_candidate_back_color: 0x593E25
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0xffffff
+    hilited_label_color: 0x8C7666
+    hilited_text_color: 0x593E25
+    label_color: 0xE0CDC1
+    name: Akarin
+    text_color: 0x593E25
+  "preset_color_schemes/akarin-dark":
+    author: Passthem
+    back_color: 0x2B1B11
+    border_color: 0xCDE6FF
+    candidate_text_color: 0xCDE6FF
+    comment_text_color: 0x787878
+    hilited_back_color: 0x5F4F44
+    hilited_candidate_back_color: 0xCDE6FF
+    hilited_candidate_text_color: 0x000000
+    hilited_comment_text_color: 0x000000
+    hilited_label_color: 0x6581B8
+    hilited_text_color: 0xCDE6FF
+    label_color: 0x5F4F44
+    name: Akarin
+    text_color: 0xCDE6FF
+  "style/color_scheme": akarin
+  "style/color_scheme_dark": akarin-dark
+  "style/comment_font_face": "霞鹜文楷"
+  "style/font_face": "HarmonyOS Sans SC"
+  "style/font_point": 12
+  "style/label_font_face": "Maple Mono NF CN"
+  "style/label_format": "[%s]"
+  "style/layout/round_corner": 0
+  "style/layout/shadow_offset_x": 4
+  "style/layout/shadow_offset_y": 4
+  "style/layout/shadow_radius": 0
+  "style/vertical_text": false
+  "style/inline_preedit": false
+  "style/candidate_list_layout": linear
+  "style/text_orientation": horizontal
+  "style/horizontal": true
