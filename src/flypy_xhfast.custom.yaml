@@ -125,7 +125,7 @@ patch:
       date_before_after: "^/(wqt|wzt|wmt|wht)$"   # [前昨明后]天
       month_before_after: "^/(wuy|wlm|wxy|wnm)$"  # 上个月下个月
 
-  punctuator/+:
+  # punctuator/+:
     digit_separators: ""                      # 指定要转换为英文半角的符号, 若双击则恢复全角(中文)
     # digit_separator_action: commit            # 上一行指定的符号在按下数字后的动作行为
     symbol_menu_prefix: '/vs'
@@ -151,7 +151,7 @@ patch:
       "#": "#"
 
   speller/+:
-    enable_fuzz_algebra: true         # 是否开启简拼功能(候选字词含有中英数混杂项)
+    # enable_fuzz_algebra: true         # 是否开启简拼功能(候选字词含有中英数混杂项)
     algebra/+:
       # - derive|/||                  # 取消注释,直接辅码(新手不推荐)
 
@@ -167,11 +167,11 @@ patch:
       # - derive/^(.*)g/$1f/          # [zcs][h]eng => [zcs][h]en
       # - derive/^(.*)f/$1g/          # [zcs][h]en => [zcs][h]eng
 
-  easy_en/+:                          # 英文单词输入方案
-    tips: "英文"
-    wildcard: '*'
-    # tag: easy_en
-    word_search_limit: 666            # 模糊匹配最多迭代数
+  # easy_en/+:                          # 英文单词输入方案
+  #   tips: "英文"
+  #   wildcard: '*'
+  #   # tag: easy_en
+  #   word_search_limit: 666            # 模糊匹配最多迭代数
 
   custom_phrase/+:                    # 自定义短语
     comment_mark: " 📌"               # 注解标记
@@ -188,8 +188,8 @@ patch:
     word_quality: 1000
     comment_mark: " ᵀᴼᴾ"              # 🔝 置顶词标记
 
-  pair_punct:                         # 符号配对开关
-    enable: true
+  # pair_punct:                         # 符号配对开关
+  #   enable: true
 
   emoji_reduce:                       # Emoji 降频
     index: 6                          # 到 index 位置

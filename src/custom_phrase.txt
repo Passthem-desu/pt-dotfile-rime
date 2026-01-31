@@ -10,3 +10,6 @@
 
 音MAD    ybmad   4
 音骂     ybma    4
+
+# 认识的朋友
+泡壳     pcke    3
