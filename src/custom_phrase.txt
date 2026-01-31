@@ -8,9 +8,51 @@
 ## 如要添加新的，可以复制已有的行，然后在其基础上修改。
 ## 置顶字词
 
+# 网络词汇
 音MAD    ybmad   4
 音骂     ybma    4
+界隈     jpww    3
+丼       ds      0
+枠       kl      0
+斩杀线   vjuaxm  0
 
 # 认识的朋友
 泡壳     pcke    3
 西多     xido    3
+榆木华   yumuhx  3
+华子哥   hxzige  3
+小槽     xncc    3
+槽哥     ccge    3
+小鸽     xnge    3
+小盐     xnyj    3
+沣沣     fgfg    3
+卵总     lrzs    2
+罗文     lowf    3
+手箱     uzxl    3
+蔼石     aiui    3
+给冰     gwbk    3
+残像     cjxl    3
+北林     bwlb    3
+
+# 专业名词
+基极     jiji    2
+射极     ueji    2
+槽路     cclu    2
+低通     dits    2
+共射极   gsueji  2
+
+# 动漫角色
+小镜     xnjk    3
+柊镜     vsjk    3
+小司     xnsi    3
+柊司     vssi    3
+此方     cifh    3
+乃莉     ndli    2
+由乃     yznd    2
+美莎绪   mwuaxu  2
+
+# Minecraft
+末地     modi    2
+末影     moyk    2
+末影龙   moykls  2
+刷怪笼   uxgkls  0
