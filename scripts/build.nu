@@ -6,6 +6,10 @@ if not ("dist" | path exists) {
     mkdir "dist"
 }
 
+if not ("dist/data" | path exists) {
+    mkdir "dist/data"
+}
+
 # Load rime-fast-xhup module
 cp -r ./submodules/rime-fast-xhup/cn_dicts ./dist/
 cp -r ./submodules/rime-flyhe-dict/* ./dist/cn_dicts/ext/
