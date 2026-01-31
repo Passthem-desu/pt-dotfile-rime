@@ -14,6 +14,7 @@
 界隈     jpww    3
 丼       ds      0
 枠       kl      0
+枠       waku    0
 斩杀线   vjuaxm  0
 
 # 认识的朋友
@@ -33,6 +34,7 @@
 给冰     gwbk    3
 残像     cjxl    3
 北林     bwlb    3
+隬碼     nima    3
 
 # 专业名词
 基极     jiji    2
