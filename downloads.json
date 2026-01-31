@@ -1,0 +1,12 @@
+[
+  {
+    "target": "wanxiang-lts-zh-hans.gram",
+    "url": "https://github.com/boomker/rime-fast-xhup/releases/download/v1.0.0/wanxiang-lts-zh-hans.gram",
+    "sha256": "22efb0987a604b92101a711a4521f4498650c76bcfb8622354f9c065c5912fde"
+  },
+  {
+    "target": "zh-hans-t-huayu-v7-bgw.gram",
+    "url": "https://github.com/boomker/rime-fast-xhup/releases/download/v1.0.0/zh-hans-t-huayu-v7-bgw.gram",
+    "sha256": "662ebad82e7fa25808fd36c830e180835a58b8478c564dfbe53d59310cb89ced"
+  }
+]

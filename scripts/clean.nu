@@ -1,3 +1,3 @@
 if ("dist" | path exists) {
-    rm dist
+    rm -rf dist
 }

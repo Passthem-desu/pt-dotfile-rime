@@ -1,161 +1,175 @@
-##  一些常用的设置项, 找到需要进行的设置所在的行,
-##  取消注释 (删除行开头的单个 # 符号) 即可启用该设置项.
-##  注意不要删除前面的空格, YAML 文件的缩进比较严格, 缩进不对容易报错.
----
-
 patch:
-  switches:
-    - name: ascii_mode
-      states: [中, En]
-    - name: ascii_punct
-      states: [。, .]
-    - name: full_shape
-      states: [半, 全]
-    - name: traditionalize
-      states: [简, 繁]
-    - name: extended_charset
-      states: [通用, 增廣]
-      reset: 1
+  switches/+:
+    - name: emoji
+      states: [🈚️, 😄]
+      reset: 0
+    - name: prediction
+      states: [休想, 联想]
+      reset: 0
     - name: char_mode
       states: [词组优先, 单字优先]
       reset: 1
+    - name: charset
+      states: [通用字集, 增廣字集]
+      reset: 1
+    - name: charset_hint
+      states: [码区隐藏, 码区显示]
+    - options: [mask_hint, tone_hint, comment_off]
+      states: [辅码开, 声调开, 注释关]
+      reset: 0
 
-  engine/+:
-    processors:
-      - ascii_composer
-      - recognizer
-      - speller
-      - selector
-      - navigator
-      - key_binder
-      - punctuator
-      - express_editor
-    segmentors/+:
-    translators:
-      - punct_translator
-      - script_translator
-      - reverse_lookup_translator
-      # - table_translator@melt_eng
-      - table_translator@custom_phrase
-    filters/+:
-  'engine/processors/@next': predictor
-  'engine/translators/@before 0': predict_translator
-  # 注释下行, 以取消中英混合的候选词条里自动添加的空格
-  'engine/filters/@before last': lua_filter@*word_append_space*filter
+  "engine/processors/@next": predictor
+  "engine/translators/@before 0": predict_translator
+  "engine/processors/@before 0": lua_processor@*keybinder
+  # 注释下行, 以取消中英混合候选词自动添加的空格
+  # 'engine/filters/@before last': lua_filter@*word_append_space*filter
   # 注释下行, 以取消中英混合输出上屏时自动添加的前导空格
   # 'engine/processors/@after 1': lua_processor@*word_append_space*processor
 
-  # 修改原快捷键方案
-  key_binder:
-    bindings:
-      # - {when: has_menu, accept: semicolon, send: 2}         # 分号用于第2候选
-      # - {when: has_menu, accept: apostrophe, send: 3}        # 单引号用于第3候选
-      # - {when: paging, accept: comma, send: Page_Up}         # 逗号上一页
-      # - {when: has_menu, accept: period, send: Page_Down}    # 句号下一页
-      - {when: paging,    accept: minus,  send: Page_Up}   # 减号- 上一页
-      - {when: has_menu,  accept: equal, send: Page_Down}  # 等号= 下一页
-      - {when: has_menu,  accept: Tab, send: Control+Right}
-      - {when: composing, accept: Tab, send: Control+Right}
-      - {when: composing, accept: Shift+Tab, send: Control+Left}
-      # - {when: composing, accept: Control+k, send: Shift+Delete}
-      # - {when: composing, accept: Control+i, send: Control+Left}
-      # - {when: composing, accept: Control+o, send: Control+Right}
-      # - {when: composing, accept: Control+w, send: Control+BackSpace}
-      - {when: has_menu, accept: Control+Shift+slash, toggle: emoji}
-      # - {when: always, accept: "Control+comma", toggle: ascii_punct}
-      # - {when: always, accept: "Control+period", toggle: full_shape}
-      # - {when: always, accept: "Control+slash", toggle: traditionalize
+  key_binder/+:
+    import_preset: default # 从 default.yaml 继承通用的
+    # simpy_expand_key: "8"             # `8/Control+q` 简码成语优先
+    char_mode: "Control+s" # 单字模式优先
+    pin_cand: "Control+t" # 候选词置顶
+    unpin_cand: "Control+t" # 候选词取消置顶
+    drop_cand: "Control+d" # 强制删词, 无视输入的编码
+    hide_cand: "Control+x" # 匹配当前输入码后隐藏指定的候选字词
+    reduce_fq_cand: "Control+j" # 匹配当前输入码后降频指定的候选字词
+    switch_comment: "Control+n" # 切换注释(小鹤形码 / 带调拼音 / 无)
+    commit_comment: "Control+p" # 注释上屏
+    # switch_english: "Control+g"       # 切换到英文输入方案
+    remove_user_word: "Control+r" # 用户词典里的字词调频为负
+    easydict_translate: "Control+y" # 调用 Easydict 翻译高亮字词
+    symbol_menu_fallback: "slash" # 符号二级菜单返回主菜单键
+    select_first_character: "9" # `9/minus` 以词定字(首字)
+    select_last_character: "0" # `0/equal` 以词定字(尾字)
+    bindings/+:
+      # - {when: has_menu,  accept: ";", send: Control+2}         # 分号; 用于第2候选
+      # - {when: has_menu,  accept: "'", send: Control+3}         # 引号' 用于第3候选
+      # - {when: paging,    accept: comma, send: Page_Up}         # 逗号, 返回上一页
+      # - {when: has_menu,  accept: ']', send: Page_Down}         # 括号] 下一页
+      # - {when: has_menu,  accept: ".", send: Control+3}       # 句号. 用于第3候选
+      - { when: paging, accept: minus, send: Page_Up } # 减号- 返回上一页
+      - { when: paging, accept: equal, send: Page_Down } # 等号= 下一页
+      # - {when: has_menu,  accept: period, send: Page_Down}    # 句号. 下一页
+      - { when: always, accept: Control+Shift+0, select: .next }
+      # - {when: always, accept: Control+Shift+G, select: easy_en}
+      - { when: composing, accept: Tab, send: Control+Right }
+      - { when: composing, accept: Shift+Tab, send: Control+Left }
+      - { when: composing, accept: Control+i, send: Control+Left }
+      - { when: composing, accept: Control+o, send: Control+Right }
+      - { when: composing, accept: Control+w, send: Control+BackSpace }
+
+  recognizer/+:
+    patterns/+:
+      flypy_radical: "^(/fr|rL)[a-z]+$" # 单字部件组字(查拼音)
 
   punctuator/+:
+    # digit_separators: ""                      # 指定要转换为英文半角的符号, 若双击则恢复全角(中文)
+    # digit_separator_action: commit            # 上一行指定的符号在按下数字后的动作行为
+    symbol_menu_prefix: "/vs"
+    symbol_normal_prefix: "/"
     symbols/+:
-      # 从 Luna 拼音迁移来的方案
-      "/0": ["〇", "零", "₀", "⁰", "⓪", "⓿", "０"]
-      "/1": ["一", "壹", "₁", "¹", "Ⅰ", "ⅰ", "①", "➀", "❶", "➊", "⓵", "⑴", "⒈", "１", "㊀", "㈠", "弌", "壱", "幺", "㆒"]
-      "/10": ["十", "拾", "₁₀", "¹⁰", "Ⅹ", "ⅹ", "⑩", "➉", "❿", "➓", "⓾", "⑽", "⒑", "１０", "㊉", "㈩", "什"]
-      "/2": ["二", "貳", "₂", "²", "Ⅱ", "ⅱ", "②", "➁", "❷", "➋", "⓶", "⑵", "⒉", "２", "㊁", "㈡", "弍", "弐", "貮", "㒃", "㒳", "兩", "倆", "㆓"]
-      "/3": ["三", "叄", "₃", "³", "Ⅲ", "ⅲ", "③", "➂", "❸", "➌", "⓷", "⑶", "⒊", "３", "㊂", "㈢", "參", "参", "叁", "弎", "仨", "㆔"]
-      "/4": ["四", "肆", "₄", "⁴", "Ⅳ", "ⅳ", "④", "➃", "❹", "➍", "⓸", "⑷", "⒋", "４", "㊃", "㈣", "亖"]
-      "/5": ["五", "伍", "₅", "⁵", "Ⅴ", "ⅴ", "⑤", "➄", "❺", "➎", "⓹", "⑸", "⒌", "５", "㊄", "㈤", "㐅", "㠪", "𠄡"]
-      "/6": ["六", "陸", "₆", "⁶", "Ⅵ", "ⅵ", "⑥", "➅", "❻", "➏", "⓺", "⑹", "⒍", "６", "㊅", "㈥", "ↅ"]
-      "/7": ["七", "柒", "₇", "⁷", "Ⅶ", "ⅶ", "⑦", "➆", "❼", "➐", "⓻", "⑺", "⒎", "７", "㊆", "㈦", "漆"]
-      "/8": ["八", "捌", "₈", "⁸", "Ⅷ", "ⅷ", "⑧", "➇", "❽", "➑", "⓼", "⑻", "⒏", "８", "㊇", "㈧"]
-      "/9": ["九", "玖", "₉", "⁹", "Ⅸ", "ⅸ", "⑨", "➈", "❾", "➒", "⓽", "⑼", "⒐", "９", "㊈", "㈨"]
     full_shape/+:
-    half_shape/+:
-      # '"': {pair: ['‘', '’']}
-      # "'": {pair: ['“', '”']}
-      # ";": {commit: "；"}                     # 恢复默认分号, 取消注释
-      # ";": [";", "；"]                          # 添加注释, 以恢复默认分号
-      '\': ['、', '､', '\', '＼', '\r', '\n', '\t']
+    half_shape:
+      ",": { commit: "，" }
+      ".": { commit: "。" }
+      ";": { commit: "；" }
+      "/": ["/", ／, ÷]
+      "|": ["|", ·, ・, ｜, "§", "¦", "‖", ︴]
+      "`": ["`", "```", ‵, ‶, ‷, ′, ″, ‴, ⁗]
+      "~": ["~", ～, ˜, ˷, ⸯ, ≈, ≋, ≃, ≅, ≇, ∽, ⋍, ≌, ﹏, ﹋, ﹌, ︴]
+      "%": ["%", ％, "°", "℃", ‰, ‱, ℉, ℅, ℆, ℀, ℁, ⅍]
+      "{": [『, "{", 〖, ｛]
+      "}": [』, "}", 〗, ｝]
+      '\': ["、", "､", '\', "＼", '\r', '\n', '\t']
       "<": [《, "<", 〈, «, ⟨, ˂, ˱]
-      ">": [》,">",  〉, », ⟩, ˃, ˲]
+      ">": [》, ">", 〉, », ⟩, ˃, ˲]
       "$": ["$", ￥, "€", "£", "¥", "¢", "¤", ₩]
-      "*": ["*", "＊", "·", "・", "×", "☆", "★", "⭐", "⋆", "✩", "✮", "⋆", "※", "❂", "⁂", "☮", "☯", "☣"]
-      "(": （
-      ")": ）
-      "[": [「, '[', 【, 〔, ［, 〚, 〘]
-      "]": [」, ']', 】, 〕, ］, 〛, 〙]
+      "*":
+        [
+          "*",
+          "＊",
+          "·",
+          "・",
+          "×",
+          "☆",
+          "★",
+          "⭐",
+          "⋆",
+          "✩",
+          "✮",
+          "⋆",
+          "※",
+          "❂",
+          "⁂",
+          "☮",
+          "☯",
+          "☣",
+        ]
+      "(": "（"
+      ")": "）"
+      "[": [「, "[", 【, 〔, ［, 〚, 〘]
+      "]": [」, "]", 】, 〕, ］, 〛, 〙]
       "_": "——"
       "=": ["=", "々"]
       "#": "#"
-      "@":
-        - "@"
-        # - "@xxx.com"
-        - "@gmail.com"
-        - "@foxmail.com"
-        - "@outlook.com"
-        - "@hotmail.com"
-        - "@qq.com"
-        - "@163.com"
-        - "@139.com"
 
   speller/+:
-    auto_commit: false                 # 二字词组加辅码唯一时则自动上屏
+    # enable_fuzz_algebra: true         # 是否开启简拼功能(候选字词含有中英数混杂项)
     algebra/+:
       # - derive|/||                  # 取消注释,直接辅码(新手不推荐)
 
       ## 模糊音:
-      - derive/^([jqxy])v/$1u/
-      - derive/^([jqxy])u/$1v/
+      - derive/^([qx])v/$1u/
+      - derive/^([jy])u/$1v/
       # - derive/^l(.*)/n$1/          # l => n
       # - derive/^n(.*)/l$1/          # n => l
       # - derive/^v(.*)/z$1/          # zh => z
+      # - derive/^i(.*)/c$1/          # ch => c
       # - derive/^u(.*)/s$1/          # sh => s
       # - derive/^(.*)k/$1b/          # ing => in
       # - derive/^(.*)g/$1f/          # [zcs][h]eng => [zcs][h]en
       # - derive/^(.*)f/$1g/          # [zcs][h]en => [zcs][h]eng
 
-  flypy_key_help/+:                   # 小鹤双拼键位帮助
+  # easy_en/+:                          # 英文单词输入方案
+  #   tips: "英文"
+  #   wildcard: '*'
+  #   # tag: easy_en
+  #   word_search_limit: 666            # 模糊匹配最多迭代数
+
+  custom_phrase/+: # 自定义短语
+    comment_mark: "*" # 注解标记
+
+  flypy_key_map/+: # 小鹤双拼键位帮助
     prefix: "/ok"
     tips: "双拼查键"
 
-  custom_phrase/+:                    # 自定义短语
-    comment_mark: " 📌"               # 注解标记
+  radical_lookup/+: # 部件组字反查拼音
+    overwrite_comment: false
+    dictionary: flyhe_fast # 可自行更换反查词典
 
-  pin_word:                           # 词条置顶配置
+  pin_word: # 词条置顶配置
     word_quality: 1000
-    comment_mark: " 🔝"               # 置顶词标记
+    comment_mark: " ᵀᴼᴾ" # 🔝 置顶词标记
 
-  char_mode:                          # 单字模式开关
-    toggle: "off"
+  # pair_punct:                         # 符号配对开关
+  #   enable: true
 
-  pair_symbol:                        # 符号配对开关
-    toggle: "off"
+  emoji_reduce: # Emoji 降频
+    index: 6 # 到 index 位置
 
-  emoji_reduce:                       # Emoji 降频
-    index: 6                          # 到 index 位置
-
-  cold_word_reduce:                   # 高亮词条降频
-    index: 4                          # 到 index 位置
+  cold_word_reduce: # 高亮词条降频
+    index: 4 # 到 index 位置
     excluded_types: ["easy_en"]
 
-  LaTeX:                              # LaTeX 公式输入
+  LaTeX: # LaTeX 公式输入
     tag: LaTeX
     # prefix: "lT"
     prefix: "/lt"
     tips: "LaTeX 公式"
 
-  history:                            # 上屏历史记录
+  history: # 上屏历史记录
     tag: history
     # prefix: "/hs"
     prefix: "hH"
@@ -165,37 +179,37 @@ patch:
     comment_max_length: 9
     excluded_types: ["punct"]
 
-  calculator:                         # 简易计算器
+  calculator: # 简易计算器
     tag: calculator
     # prefix: "/="
     prefix: "cC"
+    suffix: "'"
     tips: "计算器"
 
-  chinese_number:                     # 中文大写数字(金额)
+  cand_selector: # 候选选择器
+    word_lookup_limit: 666 # 检索最多迭代数
+    auto_select_char: false # 单字优先时全码唯一时则自动顶屏(小鹤音形效果)
+    auto_select_phrase: false # 词组加间接辅码唯一时则自动上屏(默认关闭)
+    if_unmatched_show_mark: "⭕️" # 当未匹配到候选项时, 首选 yield 一个标记以提示(留空则不显示)
+    tone_convert_format: # 声调过滤(依次对应: 一[轻]二三四声), 修改则不适配同文键盘
+      - xlit/IUNM/1234/
+
+  chinese_number: # 中文大写数字(金额)
+    tag: chinese_number
     # prefix: "/nn"
-    prefix: "Nn"
+    prefix: "nN"
     suffix: "'"
     tips: "中文数字"
-    tag: chinese_number
-    select_keys: "HJKLIOM"
+    select_keys: "sdfjum"
 
-  easy_en/+:                          # 英文单词输入方案
-    # prefix: "/oe"
-    prefix: "eN"
-    tips: "英文"
-    wildcard: '*'
-    expan_word_count: 666             # 模糊匹配最多迭代数
+  chinese_lunar: # 中国农历(可反查)
+    tag: chinese_lunar
+    # prefix: "/nl"
+    prefix: "nL"
+    suffix: "'"
+    tips: "农历"
 
-  radical_lookup/+:                   # 单字部件拆字组字
-    # prefix: "~"
-    prefix: "rL"
-    tips: 部件组字
-
-  radical_reverse_lookup/+:           # 部件组字反查拼音
-    overwrite_comment: false
-    dictionary: kMandarin             # 可自行更换反查词典
-
-  predictor:                          # 候选字词联想预测
+  predictor: # 候选字词联想预测
     db: predict.db
-    max_candidates: 7                 # 联想的候选项个数
-    max_iterations: 1                 # 联想预测的次数
+    max_candidates: 7 # 联想的候选项个数
+    max_iterations: 1 # 联想预测的次数

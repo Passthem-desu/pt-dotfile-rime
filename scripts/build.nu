@@ -43,4 +43,26 @@ open ./src/custom_phrase.txt | lines | each { |line|
     }
 } | save --force ./dist/custom_phrase.txt
 
+cp ./src/flyhe_fast.custom.yaml ./dist/flypy_xhfast.custom.yaml
+
+# Download Binary File
+let downloads = (open downloads.json)
+$downloads | each { |item|
+    let target = ("./dist" | path join $item.target)
+    let needs_download = if ($target | path exists) {
+        let current_hash = (open $target | hash sha256)
+        if $current_hash == $item.sha256 {
+            false
+        } else {
+            true
+        }
+    } else { true }
+
+    if $needs_download {
+        print $"正在下载文件 ($target) 从 ($item.url)"
+        http get $item.url | save $target
+        print ">>> 下载终了"
+    }
+}
+
 print 搞定
