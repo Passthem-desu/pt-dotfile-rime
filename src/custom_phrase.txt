@@ -16,6 +16,7 @@
 枠       kl      0
 枠       waku    0
 斩杀线   vjuaxm  0
+全所为   qrsoww  1
 
 # 认识的朋友
 泡壳     pcke    3
