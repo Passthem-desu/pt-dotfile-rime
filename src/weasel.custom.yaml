@@ -44,6 +44,6 @@ patch:
   "style/layout/shadow_radius": 0
   "style/vertical_text": false
   "style/inline_preedit": false
-  "style/candidate_list_layout": linear
+  "style/candidate_list_layout": stacked
   "style/text_orientation": horizontal
   "style/horizontal": true

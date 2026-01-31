@@ -20,7 +20,7 @@ cp ./submodules/rime-fast-xhup/flypy_* ./dist/
 cp ./submodules/rime-fast-xhup/melt_eng* ./dist/
 
 cp ./submodules/rime-fast-xhup/predict.db ./dist/
-cp ./submodules/rime-fast-xhup/custom_phrase.txt ./dist/
+# cp ./submodules/rime-fast-xhup/custom_phrase.txt ./dist/
 cp ./submodules/rime-fast-xhup/idiom_phrase.txt ./dist/
 cp ./submodules/rime-fast-xhup/zh-hans-t-essay-bgw.gram ./dist/
 
@@ -30,5 +30,13 @@ rm ./dist/flypy_xhfast.custom.yaml
 
 # Load my own scripts
 cp -r ./src/* ./dist/
+
+open ./src/custom_phrase.txt | lines | each { |line|
+    if ($line | str starts-with "#") or ($line | is-empty) {
+        $line
+    } else {
+        $line | str replace --all --regex '\s+' "\t"
+    }
+} | save --force ./dist/custom_phrase.txt
 
 print 搞定
