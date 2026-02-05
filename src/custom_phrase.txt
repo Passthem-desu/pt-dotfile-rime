@@ -47,6 +47,7 @@
 槽路     cclu    2
 低通     dits    2
 共射极   gsueji  2
+均方     jyfh    1
 
 # 动漫角色
 小镜     xnjk    3
