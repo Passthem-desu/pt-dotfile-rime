@@ -60,7 +60,12 @@
 美莎绪   mwuaxu  2
 
 # Minecraft
-末地     modi    2
-末影     moyk    2
-末影龙   moykls  2
-刷怪笼   uxgkls  0
+末地     modi      2
+末影     moyk      2
+末影龙   moykls    2
+刷怪笼   uxgkls    0
+猪灵堡垒 vulkbclw  0
+猪灵     vulk      0
+末影之眼 moykviyj  0
+岩浆块   yjjlkk    0
+碰撞箱   pgvlxl    0
