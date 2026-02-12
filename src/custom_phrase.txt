@@ -48,6 +48,10 @@
 低通     dits    2
 共射极   gsueji  2
 均方     jyfh    1
+信源     xbyr    2
+信源熵   xbyruh  2
+费诺     fwno    1
+信宿     xbsu    2
 
 # 动漫角色
 小镜     xnjk    3
