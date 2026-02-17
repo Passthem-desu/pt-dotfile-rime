@@ -41,7 +41,7 @@
 北林     bwlb    3
 隬碼     nima    3
 
-# 专业名词
+# 电路与数学
 基极     jiji    2
 射极     ueji    2
 槽路     cclu    2
@@ -73,3 +73,6 @@
 末影之眼 moykviyj  0
 岩浆块   yjjlkk    0
 碰撞箱   pgvlxl    0
+
+# 互联网运营
+封标      fgbn        0
