@@ -31,8 +31,21 @@ patch:
     label_color: 0x5F4F44
     name: Akarin
     text_color: 0xCDE6FF
+  "preset_color_schemes/one-dark":
+    name: One Dark
+    back_color: 0x342c28
+    border_color: 0xbfb2ab
+    candidate_text_color: 0xbfb2ab
+    comment_text_color: 0x70635c
+    label_color: 0x70635c
+    hilited_back_color: 0x342c28
+    hilited_candidate_back_color: 0x51443e
+    hilited_candidate_text_color: 0xbfb2ab
+    hilited_comment_text_color: 0x70635c
+    hilited_label_color: 0x70635c
+    hilited_text_color: 0xbfb2ab
   "style/color_scheme": akarin
-  "style/color_scheme_dark": akarin-dark
+  "style/color_scheme_dark": one-dark
   "style/comment_font_face": "霞鹜文楷"
   "style/font_face": "HarmonyOS Sans SC"
   "style/font_point": 12
