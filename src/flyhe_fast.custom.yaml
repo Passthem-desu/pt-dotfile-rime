@@ -18,9 +18,40 @@ patch:
       states: [辅码开, 声调开, 注释关]
       reset: 0
 
-  "engine/processors/@next": predictor
-  "engine/translators/@before 0": predict_translator
-  "engine/processors/@before 0": lua_processor@*keybinder
+  engine:
+    processors:
+      - lua_processor@*keybinder
+      - key_binder
+      - lua_processor@*select_char
+      - lua_processor@*symbol_menu
+      - lua_processor@*cand_selector*processor
+      - ascii_composer
+      - recognizer
+      - speller
+      - selector
+      - navigator
+      - punctuator
+      - express_editor
+      # - fluid_editor
+      - predictor
+    segmentors:
+      - ascii_segmentor
+      - matcher
+      - matcher@date_time_seg
+      - abc_segmentor
+      - punct_segmentor
+      - fallback_segmentor
+    translators:
+      - predict_translator
+      - punct_translator
+      - script_translator
+      - lua_translator@*date_time
+      - lua_translator@*cand_selector*translator
+    filters:
+      - simplifier@traditionalize # 简繁切换
+      - lua_filter@*cand_selector*filter
+      - uniquifier # 只能放到最后!
+
   # 注释下行, 以取消中英混合候选词自动添加的空格
   # 'engine/filters/@before last': lua_filter@*word_append_space*filter
   # 注释下行, 以取消中英混合输出上屏时自动添加的前导空格
@@ -117,6 +148,7 @@ patch:
 
   speller/+:
     # enable_fuzz_algebra: true         # 是否开启简拼功能(候选字词含有中英数混杂项)
+    delimiter: " "
     algebra/+:
       # - derive|/||                  # 取消注释,直接辅码(新手不推荐)
 
